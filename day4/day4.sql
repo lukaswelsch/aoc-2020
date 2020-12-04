@@ -1,3 +1,4 @@
+
 load data local infile '/tmp/aoc4' into table aoc4 LINES TERMINATED BY '\n' (inp) ;
 
 
@@ -16,37 +17,6 @@ AND inp like '%hgt%'
 AND inp like '%hcl%'
 AND inp like '%ecl%'
 AND inp like '%pid%';
-
-
-
-drop table if exists aoc4t ;
-create table aoc4t (byr varchar(5), iyr  varchar(5), eyr  varchar(5), hgtcm varchar(10), hgtin varchar(10), hcl varchar(20), ecl varchar(20), pid varchar(20), cid varchar(10));
-
-
-INSERT INTO aoc4t(byr,iyr,eyr,hgt,hcl,ecl,pid)
-SELECT 
-SUBSTRING(SUBSTRING(inp,INSTR(inp, 'byr:'),8), 5, 4) as byr,
-SUBSTRING(SUBSTRING(inp,INSTR(inp, 'iyr:'),8), 5, 4) as iyr,
-SUBSTRING(SUBSTRING(inp,INSTR(inp, 'eyr:'),8), 5, 4) as eyr,
-SUBSTRING(SUBSTRING(inp,INSTR(inp, 'hgt:'),9), 5, 6) as hgt,
-SUBSTRING(SUBSTRING(inp,INSTR(inp, 'hcl:'),8), 5, 7) as hcl,
-SUBSTRING(SUBSTRING(inp,INSTR(inp, 'ecl:'),8), 5, 3) as ecl,
-SUBSTRING(SUBSTRING(inp,INSTR(inp, 'pid:'),8), 5, 9) as pid
-from aoc4;
-
-
-
-
-SELECT SUBSTRING(SUBSTRING(inp,INSTR(inp, 'byr:'),8), 5, 4)
-from aoc4
-where inp like '%byr%' AND SUBSTRING(SUBSTRING(inp,INSTR(inp, 'byr:'),8), 5, 4) > 1920 
-AND inp like '%iyr%'
-AND inp like '%eyr%'
-AND inp like '%hgt%'
-AND inp like '%hcl%'
-AND inp like '%ecl%'
-AND inp like '%pid%';
-
 
 
 drop table if exists aoc4t ;
