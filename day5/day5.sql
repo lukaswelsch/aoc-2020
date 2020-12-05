@@ -26,16 +26,18 @@ FROM aoc5t
 
 
 /*part2*/
-SELECT CAST(_row AS INT) AS _row, COUNT(_row) as missing_seat
+SELECT _row * 8 + ( 28 - SUM(_column ))  as seat_id
 FROM 
 (
-SELECT (CONV(REPLACE(REPLACE(_row, 'B', 1), 'F',0),2,10)) AS _row, CONV(REPLACE(REPLACE(_column, 'R', 1), 'L',0),2,10) AS _column
+SELECT CAST(CONV(REPLACE(REPLACE(_row, 'B', 1), 'F',0),2,10) AS INT) AS _row, CAST(CONV(REPLACE(REPLACE(_column, 'R', 1), 'L',0),2,10) AS INT) AS _column
 FROM aoc5t
 )t
-WHERE _row != 11 AND _row != 104
 GROUP BY _row
-HAVING COUNT(_row) = 7
-
-SELECT CAST((CONV(REPLACE(REPLACE(_row, 'B', 1), 'F',0),2,10))AS INT) AS _row, CONV(REPLACE(REPLACE(_column, 'R', 1), 'L',0),2,10) AS _column
+HAVING COUNT(_row) = 7  
+AND _row NOT IN 
+(
+SELECT MAX(CAST((CONV(REPLACE(REPLACE(_row, 'B', 1), 'F',0),2,10))AS INT)) AS _row
 FROM aoc5t
-ORDER BY _row, _column
+UNION SELECT  MIN(CAST((CONV(REPLACE(REPLACE(_row, 'B', 1), 'F',0),2,10))AS INT)) AS _row
+FROM aoc5t
+)
